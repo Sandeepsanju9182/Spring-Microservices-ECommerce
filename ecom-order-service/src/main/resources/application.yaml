@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: ecom-order-service
+
+server:
+  port: 7070
+
+logging:
+  level:
+    com.debugd.info.ecomorderservice.client: DEBUG

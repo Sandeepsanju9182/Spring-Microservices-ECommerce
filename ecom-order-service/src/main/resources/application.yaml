@@ -8,3 +8,14 @@ server:
 logging:
   level:
     com.debugd.info.ecomorderservice.client: DEBUG
+    com.netflix.discovery: DEBUG
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 30
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 30

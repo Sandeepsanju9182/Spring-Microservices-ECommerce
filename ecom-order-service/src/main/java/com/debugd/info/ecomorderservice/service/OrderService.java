@@ -2,17 +2,22 @@ package com.debugd.info.ecomorderservice.service;
 
 import com.debugd.info.ecomorderservice.client.config.InventoryClient;
 import com.debugd.info.ecomorderservice.dto.Inventory;
+import com.netflix.discovery.DiscoveryClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 public class OrderService {
     private final InventoryClient inventoryClient;
     private  final RestTemplate restTemplate;
     private final RestClient restClient;
+//    private final DiscoveryClient discoveryClient;
     public OrderService(InventoryClient inventoryClient, RestTemplate restTemplate, RestClient restClient) {
         this.inventoryClient = inventoryClient;
         this.restTemplate = restTemplate;
@@ -20,6 +25,7 @@ public class OrderService {
     }
 
     public String placeOrder(String productId){
+
      /*
         // Rest Template Example
         String response = restTemplate.getForObject(

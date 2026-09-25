@@ -9,11 +9,11 @@ spring:
         webflux:
           routes:
             - id: ecom-order-service
-              uri: http://localhost:7070
+              uri: lb://ecom-order-service
               predicates:
                 - Path=/order/**
             - id: ecom-inventory-service
-              uri: http://localhost:7071
+              uri: lb://ecom-inventory-service
               predicates:
                 - Path=/inventory/**
 

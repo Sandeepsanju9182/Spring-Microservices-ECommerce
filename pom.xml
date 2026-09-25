@@ -13,5 +13,6 @@
         <module>ecom-order-service</module>
         <module>ecom-inventory-service</module>
         <module>eureka-server</module>
+        <module>ecom-api-service</module>
     </modules>
 </project>

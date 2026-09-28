@@ -3,6 +3,7 @@ package com.debugd.info.ecomorderservice.service;
 
 import com.debugd.info.ecomorderservice.client.config.InventoryClient;
 import com.debugd.info.ecomorderservice.dto.Inventory;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.http.HttpStatus;
@@ -23,17 +24,11 @@ public class InventoryService {
              maxAttempts = 3,
              backoff = @Backoff(delay = 2000)
      )
-     @RateLimiter(name = "inventoryService",fallbackMethod = "fallbackMethod" )
-     */
     @RateLimiter(name = "inventoryService",fallbackMethod = "fallbackMethod")
     public Inventory getInventory(Long productId) {
         System.out.println("Calling Inventory Service for productId: " + productId);
         return inventoryClient.getInventory(productId);
-    }
-//    public Inventory circuitBreakerFallbackMethod(Long productId, Throwable throwable){
-//        System.out.println("Fallback Method Called for productId: " + productId);
-//        return new Inventory(productId.toString(),0);
-//    }
+    }*/
 
     public Inventory fallbackMethod(Long productId, Throwable throwable) {
         if (throwable instanceof RequestNotPermitted) {
@@ -49,4 +44,14 @@ public class InventoryService {
         throw new IllegalStateException("Inventory lookup failed", throwable);
     }
 
+    @CircuitBreaker(name = "inventoryServiceCircuitBreaker", fallbackMethod = "circuitBreakerFallbackMethod")
+    public Inventory getInventory(Long productId) {
+        System.out.println("Calling Inventory Service for productId: " + productId);
+        return inventoryClient.getInventory(productId);
+    }
+
+    public Inventory circuitBreakerFallbackMethod(Long productId, Throwable throwable){
+        System.out.println("Fallback Method Called for productId: " + productId);
+        return new Inventory(productId.toString(),0);
+    }
 }

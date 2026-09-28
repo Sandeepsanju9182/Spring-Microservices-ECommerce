@@ -32,7 +32,9 @@ public class InventoryController {
     }
 
     @DeleteMapping("/{productId}")
-    public String deleteProduct(@PathVariable Long productId){
-        return inventoryService.deleteProduct(productId);
+    public String deleteProduct(@PathVariable Long productId) throws Exception{
+        // Thread.sleep(15000);
+        throw new Exception("Inventory Service is down");
+//        return inventoryService.deleteProduct(productId);
     }
 }

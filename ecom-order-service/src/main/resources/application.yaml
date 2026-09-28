@@ -20,3 +20,11 @@ eureka:
   instance:
     lease-renewal-interval-in-seconds: 30
     hostname: localhost
+
+resilience4j:
+  ratelimiter:
+    instances:
+      inventoryService:
+        limit-for-period: 2  #2 requests per 10 second
+        limit-refresh-period: 10s #10 seconds to refresh limits
+        timeout-duration: 0s

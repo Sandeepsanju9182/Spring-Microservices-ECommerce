@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient(name = "ecom-inventory-service", configuration = InventoryFeignClientConfig.class)
 public interface InventoryClient {
     @GetMapping("/inventory/{productId}")
-    Inventory getInventory(@PathVariable String  productId);
+    Inventory getInventory(@PathVariable Long  productId);
 
     @PutMapping("/inventory")
     String updateInventory(@RequestBody Inventory inventory);
